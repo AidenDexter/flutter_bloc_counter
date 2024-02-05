@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'cubit/counter_cubit.dart';
+import '../../logic/cubit/counter_cubit.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key, required this.title, required this.backgroundScreenColor});
   final String title;
-
+  final Color backgroundScreenColor;
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.backgroundScreenColor,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -53,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
+                  heroTag: "Decrement1",
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrement();
                     // context.bloc<CounterCubit>().decrement();
@@ -61,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Icon(Icons.remove),
                 ),
                 FloatingActionButton(
+                  heroTag: "Increment2",
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).increment();
                     // context.bloc<CounterCubit>().increment();
@@ -70,6 +73,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
+            const SizedBox(height: 24),
+            MaterialButton(
+              color: const Color.fromARGB(220, 47, 184, 243),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/second');
+              },
+              child: const Text('Go to Second Screen'),
+            ),
+            const SizedBox(height: 24),
+            MaterialButton(
+                color: const Color.fromARGB(255, 34, 180, 73),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/third');
+                },
+                child: const Text('Go to Third Screen')),
           ],
         ),
       ),
